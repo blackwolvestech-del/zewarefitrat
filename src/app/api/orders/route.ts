@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createOrder, getProducts } from "@/lib/db";
+import { notifyNewOrder } from "@/lib/notify";
 import { site } from "@/lib/site";
 
 type IncomingItem = { id: string; color: string; qty: number };
@@ -79,6 +80,9 @@ export async function POST(req: NextRequest) {
     coupon: coupon?.trim() || undefined,
     giftNote: giftNote?.trim() || undefined,
   });
+
+  // Notify the owner (WhatsApp / webhook) — fire-and-forget
+  notifyNewOrder(order);
 
   return NextResponse.json(
     { ok: true, number: order.number, total: order.total },

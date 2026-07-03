@@ -49,6 +49,29 @@ That's it — the `zf_data` volume survives redeploys, so products/orders/upload
 | `ADMIN_PASSWORD` | **Yes**  | `zewarefitrat123`    | Password for `/admin`. Change it.         |
 | `DATA_DIR`       | Yes*     | `/app/data`          | Where the JSON db + uploads live.         |
 | `ADMIN_SECRET`   | No       | derived from password| Extra secret for signing admin sessions.  |
+| `CALLMEBOT_PHONE`  | No     | —                    | Your WhatsApp number for order alerts.    |
+| `CALLMEBOT_APIKEY` | No     | —                    | CallMeBot key (see below).                |
+| `ORDER_WEBHOOK_URL`| No     | —                    | POST each order to n8n/Zapier/etc.        |
+
+## WhatsApp order notifications
+
+Get a WhatsApp message the moment a customer places an order.
+
+**Free option — CallMeBot (2 minutes):**
+1. Save **+34 644 74 82 80** to your phone contacts.
+2. Send it this WhatsApp message: `I allow callmebot to send me messages`
+3. It replies with your **apikey**.
+4. In Coolify env vars, set:
+   - `CALLMEBOT_PHONE` = your number with country code, e.g. `923001234567`
+   - `CALLMEBOT_APIKEY` = the key it gave you
+5. Redeploy. Place a test order — you'll get a WhatsApp with the order details.
+
+**Advanced option — webhook:** set `ORDER_WEBHOOK_URL` to any endpoint (n8n, Zapier,
+Make, or a WhatsApp Cloud API relay). Each order is POSTed as
+`{ type: "new_order", message, order }`.
+
+Both can be set at once. If neither is set, orders are still saved — you just
+won't get a push notification (check the admin Orders page).
 
 \* Required only in the sense that it must point at your mounted volume. The Docker
 image already defaults it to `/app/data`.
