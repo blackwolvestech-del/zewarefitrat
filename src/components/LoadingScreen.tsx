@@ -16,7 +16,7 @@ export function LoadingScreen() {
     const t = setTimeout(() => {
       sessionStorage.setItem("zf-loaded", "1");
       setDone(true);
-    }, 1900);
+    }, 1300);
     document.body.style.overflow = "hidden";
     return () => {
       clearTimeout(t);
@@ -60,7 +60,7 @@ export function LoadingScreen() {
               className="h-full bg-gold"
               initial={{ x: "-100%" }}
               animate={{ x: "0%" }}
-              transition={{ duration: 1.7, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
             />
           </div>
         </motion.div>

@@ -58,7 +58,7 @@ const config: Config = {
         wide2: "0.16em",
       },
       spacing: {
-        section: "clamp(5rem, 12vw, 11rem)",
+        section: "clamp(3.75rem, 7vw, 7rem)",
       },
       maxWidth: {
         container: "1440px",
