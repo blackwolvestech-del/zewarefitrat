@@ -1,4 +1,4 @@
-import { products, type Product } from "@/data/products";
+import type { Product } from "@/data/products";
 
 // Synonym map to give the search an "understands-what-you-mean" feel.
 const SYNONYMS: Record<string, string[]> = {
@@ -31,7 +31,11 @@ function expand(token: string): string[] {
 
 export type SearchResult = { product: Product; score: number };
 
-export function smartSearch(query: string, limit = 6): SearchResult[] {
+export function smartSearch(
+  products: Product[],
+  query: string,
+  limit = 6
+): SearchResult[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
 

@@ -32,9 +32,13 @@ export function ProductDetail({ product }: { product: Product }) {
     ? Math.round(((product.compareAt - product.price) / product.compareAt) * 100)
     : 0;
 
-  // Live inventory indicator (real stock drops in via product.stock later)
-  const stock = 4 + (parseInt(product.id.replace(/\D/g, ""), 10) % 8);
-  const lowStock = stock <= 7;
+  // Live inventory — real stock when tracked in admin, subtle fallback otherwise
+  const stock =
+    typeof product.stock === "number"
+      ? product.stock
+      : 4 + ((parseInt(product.id.replace(/\D/g, ""), 16) || 3) % 8);
+  const outOfStock = !product.inStock || stock === 0;
+  const lowStock = !outOfStock && stock <= 7;
 
   const buyNow = () => {
     add(product, color, qty);
@@ -44,7 +48,7 @@ export function ProductDetail({ product }: { product: Product }) {
   return (
     <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
       <div className="lg:sticky lg:top-28 lg:h-fit">
-        <Gallery images={product.images} name={product.name} />
+        <Gallery images={product.images} name={product.name} video={product.video} />
       </div>
 
       <div>
@@ -138,8 +142,12 @@ export function ProductDetail({ product }: { product: Product }) {
               +
             </button>
           </div>
-          <button onClick={() => add(product, color, qty)} className="btn-outline flex-1 text-pearl">
-            Add to Bag
+          <button
+            onClick={() => add(product, color, qty)}
+            disabled={outOfStock}
+            className="btn-outline flex-1 text-pearl disabled:pointer-events-none disabled:opacity-40"
+          >
+            {outOfStock ? "Out of Stock" : "Add to Bag"}
           </button>
           <button
             aria-label="Add to wishlist"
@@ -155,8 +163,12 @@ export function ProductDetail({ product }: { product: Product }) {
         </div>
 
         {/* Buy Now */}
-        <button onClick={buyNow} className="btn-gold mt-3 w-full">
-          Buy Now — {formatPKR(product.price * qty)}
+        <button
+          onClick={buyNow}
+          disabled={outOfStock}
+          className="btn-gold mt-3 w-full disabled:pointer-events-none disabled:opacity-40"
+        >
+          {outOfStock ? "Currently Unavailable" : `Buy Now — ${formatPKR(product.price * qty)}`}
         </button>
 
         {/* Trust mini */}

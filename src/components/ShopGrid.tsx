@@ -2,16 +2,18 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { products, categories, collections } from "@/data/products";
+import { categories, collections, type Product } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 
 type Sort = "featured" | "price-asc" | "price-desc" | "rating";
 
 export function ShopGrid({
+  products,
   initialCategory,
   initialCollection,
   initialQuery,
 }: {
+  products: Product[];
   initialCategory?: string;
   initialCollection?: string;
   initialQuery?: string;
@@ -50,7 +52,7 @@ export function ShopGrid({
         );
     }
     return list;
-  }, [category, collection, sort, query]);
+  }, [products, category, collection, sort, query]);
 
   return (
     <div>

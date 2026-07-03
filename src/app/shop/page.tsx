@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { ShopGrid } from "@/components/ShopGrid";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { getProducts } from "@/lib/catalog";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Shop All Jewellery",
@@ -32,6 +35,7 @@ export default async function ShopPage({
 
       <div className="mt-10">
         <ShopGrid
+          products={getProducts()}
           initialCategory={params.category}
           initialCollection={params.collection}
           initialQuery={params.q}

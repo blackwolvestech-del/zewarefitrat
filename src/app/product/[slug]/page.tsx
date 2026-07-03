@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProduct, products, relatedProducts } from "@/data/products";
+import { getProduct, getRelated } from "@/lib/catalog";
 import { ProductDetail } from "@/components/product/ProductDetail";
 import { Reviews } from "@/components/product/Reviews";
 import { StickyAddToCart } from "@/components/product/StickyAddToCart";
@@ -10,9 +10,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Reveal, Stagger } from "@/components/Reveal";
 import { site } from "@/lib/site";
 
-export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -44,7 +42,7 @@ export default async function ProductPage({
   const product = getProduct(slug);
   if (!product) notFound();
 
-  const related = relatedProducts(product);
+  const related = getRelated(product);
 
   const jsonLd = {
     "@context": "https://schema.org",

@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
-import { products } from "@/data/products";
+import { getProducts } from "@/lib/db";
 import { site } from "@/lib/site";
+
+export const dynamic = "force-dynamic";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -18,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${site.url}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  const productPages: MetadataRoute.Sitemap = products.map((p) => ({
+  const productPages: MetadataRoute.Sitemap = getProducts().map((p) => ({
     url: `${site.url}/product/${p.slug}`,
     lastModified: now,
     changeFrequency: "weekly",

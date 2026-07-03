@@ -30,6 +30,8 @@ export type Product = {
   specs: { label: string; value: string }[];
   care: string[];
   inStock: boolean;
+  stock?: number; // live inventory count (managed in admin)
+  video?: string; // product video URL (upload or external)
   reviews: Review[];
 };
 

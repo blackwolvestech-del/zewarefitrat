@@ -1,15 +1,17 @@
 "use client";
 
 import { useRecentlyViewed } from "@/context/RecentlyViewedContext";
-import { products } from "@/data/products";
+import { useProducts } from "@/lib/useProducts";
+import type { Product } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 
 export function RecentlyViewed({ excludeId }: { excludeId?: string }) {
   const { ids } = useRecentlyViewed();
+  const { products } = useProducts();
   const items = ids
     .filter((id) => id !== excludeId)
     .map((id) => products.find((p) => p.id === id))
-    .filter((p): p is (typeof products)[number] => Boolean(p))
+    .filter((p): p is Product => Boolean(p))
     .slice(0, 4);
 
   if (items.length === 0) return null;

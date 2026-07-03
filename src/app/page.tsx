@@ -7,6 +7,9 @@ import { Testimonials } from "@/components/home/Testimonials";
 import { FaqPreview } from "@/components/home/FaqPreview";
 import { homeFaqs } from "@/data/faqs";
 import { site } from "@/lib/site";
+import { getFeatured } from "@/lib/catalog";
+
+export const dynamic = "force-dynamic";
 
 const faqJsonLd = {
   "@context": "https://schema.org",
@@ -43,7 +46,7 @@ export default function HomePage() {
       />
       <Hero />
       <TrustBar />
-      <FeaturedProducts />
+      <FeaturedProducts products={getFeatured(4)} />
       <Collections />
       <BrandStory />
       <Testimonials />

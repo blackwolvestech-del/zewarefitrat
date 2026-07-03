@@ -21,7 +21,44 @@ export function CheckoutClient() {
   const [giftNote, setGiftNote] = useState(false);
   const [coupon, setCoupon] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
-  const [placed, setPlaced] = useState(false);
+  const [placed, setPlaced] = useState<{ number: string } | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const placeOrder = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setSubmitError("");
+    const fd = new FormData(e.currentTarget);
+    const res = await fetch("/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        customer: {
+          name: fd.get("name"),
+          phone: fd.get("phone"),
+          email: fd.get("email") || undefined,
+          address: fd.get("address"),
+          city: fd.get("city"),
+          postal: fd.get("postal") || undefined,
+        },
+        payment,
+        items: items.map((i) => ({ id: i.id, color: i.color, qty: i.qty })),
+        coupon: couponApplied ? coupon.trim() : undefined,
+        giftNote: giftNote ? String(fd.get("giftMessage") || "") : undefined,
+      }),
+    }).catch(() => null);
+
+    const json = await res?.json().catch(() => ({}));
+    if (!res?.ok) {
+      setSubmitError(json?.error || "Something went wrong — please try again.");
+      setSubmitting(false);
+      return;
+    }
+    setPlaced({ number: json.number });
+    clear();
+    window.scrollTo({ top: 0 });
+  };
 
   const discount = couponApplied ? Math.round(subtotal * 0.1) : 0;
   const shipping =
@@ -42,9 +79,13 @@ export function CheckoutClient() {
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" strokeWidth="2.5"><path d="M5 13l4 4L19 7" /></svg>
         </motion.div>
         <h1 className="mt-8 font-serif text-4xl sm:text-5xl">Shukriya! Order placed</h1>
+        <p className="mt-3 text-[13px] uppercase tracking-wide2 text-gold">
+          Order {placed.number}
+        </p>
         <p className="mt-4 max-w-md text-[15px] leading-relaxed text-stone-light">
           Your pieces are being prepared with care. You&apos;ll receive a
-          confirmation on WhatsApp and email shortly, with tracking to follow.
+          confirmation on WhatsApp shortly — quote{" "}
+          <span className="text-pearl">{placed.number}</span> for any queries.
         </p>
         <Link href="/shop" className="btn-gold mt-9">Continue Shopping</Link>
       </div>
@@ -70,12 +111,7 @@ export function CheckoutClient() {
 
       <form
         className="mt-10 grid gap-10 lg:grid-cols-[1.2fr_0.8fr]"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setPlaced(true);
-          clear();
-          window.scrollTo({ top: 0 });
-        }}
+        onSubmit={placeOrder}
       >
         {/* Left: forms */}
         <div className="space-y-10">
@@ -241,8 +277,21 @@ export function CheckoutClient() {
               </div>
             </div>
 
-            <button type="submit" className="btn-gold mt-6 w-full">
-              {payment === "cod" ? "Place Order — Pay on Delivery" : "Pay & Place Order"}
+            {submitError && (
+              <p className="mt-4 border border-red-400/40 bg-red-400/10 px-4 py-3 text-[13px] text-red-300">
+                {submitError}
+              </p>
+            )}
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn-gold mt-6 w-full disabled:opacity-60"
+            >
+              {submitting
+                ? "Placing order…"
+                : payment === "cod"
+                  ? "Place Order — Pay on Delivery"
+                  : "Pay & Place Order"}
             </button>
             <p className="mt-4 flex items-center justify-center gap-2 text-[11px] text-stone">
               <LockIcon /> 256-bit SSL secure · 7-day easy returns

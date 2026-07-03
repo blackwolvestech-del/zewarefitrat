@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useWishlist } from "@/context/WishlistContext";
-import { products } from "@/data/products";
+import { useProducts } from "@/lib/useProducts";
 import { ProductCard } from "@/components/ProductCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 
 export function WishlistClient() {
   const { ids } = useWishlist();
+  const { products } = useProducts();
   const items = products.filter((p) => ids.includes(p.id));
 
   return (

@@ -5,9 +5,8 @@ const nextConfig = {
   compress: true,
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-    ],
+    // Admin can attach product imagery from any https source
+    remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
   async headers() {
     return [

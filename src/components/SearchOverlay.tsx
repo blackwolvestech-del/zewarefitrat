@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { smartSearch, trendingSearches } from "@/lib/search";
 import { formatPKR } from "@/data/products";
+import { useProducts } from "@/lib/useProducts";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -34,7 +35,8 @@ export function SearchOverlay() {
     document.body.style.overflow = open ? "hidden" : "";
   }, [open]);
 
-  const results = useMemo(() => smartSearch(q, 6), [q]);
+  const { products } = useProducts(open);
+  const results = useMemo(() => smartSearch(products, q, 6), [products, q]);
 
   return (
     <AnimatePresence>
