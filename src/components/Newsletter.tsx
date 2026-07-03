@@ -9,14 +9,14 @@ export function Newsletter() {
 
   return (
     <div className="border-b border-white/10">
-      <div className="container-lux grid gap-8 py-16 lg:grid-cols-2 lg:items-center">
+      <div className="container-lux grid gap-10 py-20 lg:grid-cols-2 lg:items-center">
         <div>
           <p className="eyebrow">The Fitrat List</p>
-          <h3 className="mt-3 font-serif text-3xl leading-tight text-pearl sm:text-4xl">
+          <h3 className="mt-4 font-serif text-h3 font-light text-pearl">
             Rs 500 off your first order
           </h3>
-          <p className="mt-3 max-w-md text-sm text-stone-light">
-            Join for early access to new drops, private bridal previews and
+          <p className="mt-4 max-w-md text-[15px] font-light leading-relaxed text-stone-light">
+            Join for early access to new arrivals, private bridal previews and
             members-only pricing.
           </p>
         </div>

@@ -5,25 +5,23 @@ import { Reveal, Stagger } from "@/components/Reveal";
 
 export function FeaturedProducts() {
   return (
-    <section className="container-lux py-20 lg:py-28">
-      <Reveal className="flex flex-col items-end justify-between gap-4 sm:flex-row sm:items-end">
+    <section className="container-lux py-section">
+      <Reveal className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="eyebrow">Signature Pieces</p>
-          <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
-            The Most Coveted
-          </h2>
+          <h2 className="mt-4 font-serif text-h2 font-light">The Most Coveted</h2>
         </div>
         <Link
           href="/shop"
-          className="link-underline text-[12px] font-medium uppercase tracking-wide2 text-gold"
+          className="link-underline w-fit text-[11px] font-medium uppercase tracking-wide2 text-gold"
         >
           View all jewellery →
         </Link>
       </Reveal>
 
-      <div className="mt-6 hairline opacity-40" />
+      <div className="mt-8 hairline opacity-50" />
 
-      <Stagger className="mt-10 grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4">
+      <Stagger className="mt-12 grid grid-cols-2 gap-x-5 gap-y-14 sm:gap-x-8 lg:grid-cols-4">
         {featuredProducts.slice(0, 4).map((product, i) => (
           <ProductCard key={product.id} product={product} priority={i < 2} />
         ))}

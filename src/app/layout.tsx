@@ -1,20 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Playfair_Display, Noto_Nastaliq_Urdu } from "next/font/google";
+import { Manrope, Cormorant_Garamond, Noto_Nastaliq_Urdu } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/context/CartContext";
+import { Providers } from "@/context/Providers";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CartDrawer } from "@/components/CartDrawer";
+import { LoadingScreen } from "@/components/LoadingScreen";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { SearchOverlay } from "@/components/SearchOverlay";
 import { site } from "@/lib/site";
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-manrope",
   display: "swap",
 });
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 const nastaliq = Noto_Nastaliq_Urdu({
@@ -91,19 +97,22 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${playfair.variable} ${nastaliq.variable}`}
+      className={`${manrope.variable} ${cormorant.variable} ${nastaliq.variable}`}
     >
       <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
-        <CartProvider>
+        <LoadingScreen />
+        <Providers>
           <Navbar />
           <main>{children}</main>
           <Footer />
           <CartDrawer />
-        </CartProvider>
+          <SearchOverlay />
+          <WhatsAppButton />
+        </Providers>
       </body>
     </html>
   );

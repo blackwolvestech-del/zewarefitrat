@@ -4,6 +4,7 @@ import { getProduct, products, relatedProducts } from "@/data/products";
 import { ProductDetail } from "@/components/product/ProductDetail";
 import { Reviews } from "@/components/product/Reviews";
 import { StickyAddToCart } from "@/components/product/StickyAddToCart";
+import { RecentlyViewed } from "@/components/product/RecentlyViewed";
 import { ProductCard } from "@/components/ProductCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Reveal, Stagger } from "@/components/Reveal";
@@ -117,21 +118,23 @@ export default async function ProductPage({
       <Reviews product={product} />
 
       {/* Related */}
-      <section className="border-t border-white/10 py-16 lg:py-24">
+      <section className="border-t border-white/10 py-section">
         <Reveal className="flex items-end justify-between">
           <div>
-            <p className="eyebrow">Complete the look</p>
-            <h2 className="mt-3 font-serif text-3xl sm:text-4xl">
+            <p className="eyebrow">Complete the Look</p>
+            <h2 className="mt-4 font-serif text-h2 font-light">
               You may also love
             </h2>
           </div>
         </Reveal>
-        <Stagger className="mt-10 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4">
+        <Stagger className="mt-12 grid grid-cols-2 gap-x-5 gap-y-14 sm:gap-x-8 lg:grid-cols-4">
           {related.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
         </Stagger>
       </section>
+
+      <RecentlyViewed excludeId={product.id} />
 
       <StickyAddToCart product={product} />
     </div>
