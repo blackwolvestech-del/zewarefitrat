@@ -1,0 +1,20 @@
+# ZEWARE FITRAT — Coolify "Docker Compose" deployment.
+# The named volume keeps products, orders and uploaded media across deploys.
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # ⚠️ Change this to a strong password in Coolify's env settings.
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-change-me-please}
+      DATA_DIR: /app/data
+      NODE_ENV: production
+    volumes:
+      - zf_data:/app/data
+
+volumes:
+  zf_data:
