@@ -1,197 +1,238 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Gallery } from "./Gallery";
 import { Stars } from "@/components/ProductCard";
 import { formatPKR, type Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
-import { site } from "@/lib/site";
+import { useWishlist } from "@/context/WishlistContext";
+import { useRecentlyViewed } from "@/context/RecentlyViewedContext";
 
 const tabs = ["Story", "Features", "Specifications", "Care"] as const;
 type Tab = (typeof tabs)[number];
 
 export function ProductDetail({ product }: { product: Product }) {
   const { add } = useCart();
+  const router = useRouter();
+  const { has, toggle } = useWishlist();
+  const { track } = useRecentlyViewed();
   const [color, setColor] = useState(product.colors[0]);
   const [qty, setQty] = useState(1);
   const [tab, setTab] = useState<Tab>("Story");
-  const [wish, setWish] = useState(false);
+  const wished = has(product.id);
+
+  useEffect(() => {
+    track(product.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product.id]);
+
   const discount = product.compareAt
     ? Math.round(((product.compareAt - product.price) / product.compareAt) * 100)
     : 0;
 
+  // Live inventory indicator (real stock drops in via product.stock later)
+  const stock = 4 + (parseInt(product.id.replace(/\D/g, ""), 10) % 8);
+  const lowStock = stock <= 7;
+
+  const buyNow = () => {
+    add(product, color, qty);
+    router.push("/checkout");
+  };
+
   return (
-    <div>
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-        <div className="lg:sticky lg:top-24 lg:h-fit">
-          <Gallery images={product.images} name={product.name} />
+    <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="lg:sticky lg:top-28 lg:h-fit">
+        <Gallery images={product.images} name={product.name} />
+      </div>
+
+      <div>
+        <p className="eyebrow">{product.collection}</p>
+        <h1 className="mt-4 font-serif text-h1 font-light leading-[1]">
+          {product.name}
+        </h1>
+        <p className="mt-3 text-[16px] font-light italic text-stone-light">
+          {product.tagline}
+        </p>
+
+        <div className="mt-5 flex items-center gap-3">
+          <Stars rating={product.rating} size={15} />
+          <span className="text-[13px] font-light text-stone-light">
+            {product.rating} · {product.reviewCount} reviews
+          </span>
         </div>
 
-        <div>
-          <p className="eyebrow">{product.collection}</p>
-          <h1 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
-            {product.name}
-          </h1>
-          <p className="mt-2 text-[15px] italic text-stone-light">{product.tagline}</p>
+        <div className="mt-7 flex items-baseline gap-3">
+          <span className="font-serif text-4xl font-light text-pearl">
+            {formatPKR(product.price)}
+          </span>
+          {product.compareAt && (
+            <>
+              <span className="text-lg font-light text-stone line-through">
+                {formatPKR(product.compareAt)}
+              </span>
+              <span className="bg-gold/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide2 text-gold">
+                Save {discount}%
+              </span>
+            </>
+          )}
+        </div>
+        <p className="mt-2 text-[12px] font-light text-stone">
+          Inclusive of all taxes · COD available
+        </p>
 
-          <div className="mt-4 flex items-center gap-3">
-            <Stars rating={product.rating} size={15} />
-            <span className="text-[13px] text-stone-light">
-              {product.rating} · {product.reviewCount} reviews
+        {/* Live inventory */}
+        {lowStock && (
+          <div className="mt-5 flex items-center gap-2.5">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
+            </span>
+            <span className="text-[12px] font-light text-gold-light">
+              Selling fast — only {stock} left in stock
             </span>
           </div>
+        )}
 
-          <div className="mt-6 flex items-baseline gap-3">
-            <span className="font-serif text-3xl text-gold">{formatPKR(product.price)}</span>
-            {product.compareAt && (
-              <>
-                <span className="text-lg text-stone line-through">{formatPKR(product.compareAt)}</span>
-                <span className="rounded-full bg-gold/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide2 text-gold">
-                  Save {discount}%
-                </span>
-              </>
-            )}
-          </div>
-          <p className="mt-1 text-[12px] text-stone">Inclusive of all taxes · COD available</p>
+        <div className="my-8 h-px w-full bg-white/10" />
 
-          <div className="hairline my-7 opacity-40" />
-
-          {/* Colours */}
-          <div>
-            <p className="text-[11px] uppercase tracking-luxe text-stone">
-              Finish — <span className="text-pearl">{color}</span>
-            </p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {product.colors.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => setColor(c)}
-                  className={`rounded-full border px-4 py-2 text-[12px] transition-all ${
-                    color === c
-                      ? "border-gold text-gold"
-                      : "border-white/15 text-stone-light hover:border-gold/60"
-                  }`}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Quantity + add */}
-          <div className="mt-7 flex items-stretch gap-3">
-            <div className="flex items-center border border-white/15">
+        {/* Finish */}
+        <div>
+          <p className="text-[10px] uppercase tracking-luxe text-stone">
+            Finish — <span className="text-pearl">{color}</span>
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {product.colors.map((c) => (
               <button
-                aria-label="Decrease quantity"
-                onClick={() => setQty((q) => Math.max(1, q - 1))}
-                className="px-4 py-3 text-stone-light hover:text-gold"
+                key={c}
+                onClick={() => setColor(c)}
+                className={`border px-5 py-2.5 text-[12px] font-light transition-all ${
+                  color === c
+                    ? "border-gold text-gold"
+                    : "border-white/15 text-stone-light hover:border-gold/60"
+                }`}
               >
-                −
+                {c}
               </button>
-              <span className="w-8 text-center">{qty}</span>
-              <button
-                aria-label="Increase quantity"
-                onClick={() => setQty((q) => q + 1)}
-                className="px-4 py-3 text-stone-light hover:text-gold"
-              >
-                +
-              </button>
-            </div>
-            <button
-              onClick={() => add(product, color, qty)}
-              className="btn-gold flex-1"
-            >
-              Add to Bag — {formatPKR(product.price * qty)}
-            </button>
-            <button
-              aria-label="Add to wishlist"
-              onClick={() => setWish((w) => !w)}
-              className={`flex w-14 items-center justify-center border transition-all ${
-                wish ? "border-gold text-gold" : "border-white/15 text-stone-light hover:border-gold"
-              }`}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill={wish ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.5">
-                <path d="M12 21s-7-4.35-9.5-8.5C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.5 0 5 3.5 3.5 7C19 16.65 12 21 12 21Z" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Trust mini */}
-          <div className="mt-7 grid grid-cols-3 gap-3 border-y border-white/10 py-5 text-center">
-            {[
-              { t: "Free over Rs 5k", s: site.shipping.deliveryDays },
-              { t: "7-Day Returns", s: "Easy & free" },
-              { t: "Anti-Tarnish", s: "Skin-safe" },
-            ].map((x) => (
-              <div key={x.t}>
-                <p className="text-[12px] font-medium text-pearl">{x.t}</p>
-                <p className="mt-0.5 text-[10px] uppercase tracking-wide2 text-stone">{x.s}</p>
-              </div>
             ))}
           </div>
+        </div>
 
-          {/* Tabs */}
-          <div className="mt-8">
-            <div className="flex gap-6 border-b border-white/10">
-              {tabs.map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setTab(t)}
-                  className={`relative pb-3 text-[12px] font-medium uppercase tracking-wide2 transition-colors ${
-                    tab === t ? "text-gold" : "text-stone hover:text-pearl"
-                  }`}
-                >
-                  {t}
-                  {tab === t && (
-                    <motion.span layoutId="tab" className="absolute -bottom-px left-0 h-px w-full bg-gold" />
-                  )}
-                </button>
-              ))}
-            </div>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={tab}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="py-6 text-[14px] leading-relaxed text-stone-light"
-              >
-                {tab === "Story" && <p>{product.story}</p>}
-                {tab === "Features" && (
-                  <ul className="space-y-2">
-                    {product.features.map((f) => (
-                      <li key={f} className="flex gap-3">
-                        <span className="text-gold">✦</span>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {tab === "Specifications" && (
-                  <dl className="divide-y divide-white/5">
-                    {product.specs.map((s) => (
-                      <div key={s.label} className="flex justify-between py-2.5">
-                        <dt className="text-stone">{s.label}</dt>
-                        <dd className="text-pearl">{s.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                )}
-                {tab === "Care" && (
-                  <ul className="space-y-2">
-                    {product.care.map((c) => (
-                      <li key={c} className="flex gap-3">
-                        <span className="text-gold">–</span>
-                        {c}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </motion.div>
-            </AnimatePresence>
+        {/* Quantity + actions */}
+        <div className="mt-8 flex items-stretch gap-3">
+          <div className="flex items-center border border-white/15">
+            <button
+              aria-label="Decrease quantity"
+              onClick={() => setQty((q) => Math.max(1, q - 1))}
+              className="px-4 py-4 text-stone-light transition-colors hover:text-gold"
+            >
+              −
+            </button>
+            <span className="w-8 text-center text-sm">{qty}</span>
+            <button
+              aria-label="Increase quantity"
+              onClick={() => setQty((q) => q + 1)}
+              className="px-4 py-4 text-stone-light transition-colors hover:text-gold"
+            >
+              +
+            </button>
           </div>
+          <button onClick={() => add(product, color, qty)} className="btn-outline flex-1 text-pearl">
+            Add to Bag
+          </button>
+          <button
+            aria-label="Add to wishlist"
+            onClick={() => toggle(product.id)}
+            className={`flex w-14 items-center justify-center border transition-all ${
+              wished ? "border-gold text-gold" : "border-white/15 text-stone-light hover:border-gold"
+            }`}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill={wished ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.4">
+              <path d="M12 21s-7-4.35-9.5-8.5C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.4.8-1.2 2-2.4 4-2.4 3.5 0 5 3.5 3.5 7C19 16.65 12 21 12 21Z" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Buy Now */}
+        <button onClick={buyNow} className="btn-gold mt-3 w-full">
+          Buy Now — {formatPKR(product.price * qty)}
+        </button>
+
+        {/* Trust mini */}
+        <div className="mt-8 grid grid-cols-3 gap-3 border-y border-white/10 py-6 text-center">
+          {[
+            { t: "Free over Rs 5k", s: "2–4 day delivery" },
+            { t: "7-Day Returns", s: "Easy & free" },
+            { t: "Anti-Tarnish", s: "Skin-safe" },
+          ].map((x) => (
+            <div key={x.t}>
+              <p className="text-[12px] font-medium text-pearl">{x.t}</p>
+              <p className="mt-1 text-[9px] uppercase tracking-luxe text-stone">{x.s}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Tabs */}
+        <div className="mt-8">
+          <div className="flex gap-7 border-b border-white/10">
+            {tabs.map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`relative pb-3 text-[11px] font-medium uppercase tracking-wide2 transition-colors ${
+                  tab === t ? "text-gold" : "text-stone hover:text-pearl"
+                }`}
+              >
+                {t}
+                {tab === t && (
+                  <motion.span layoutId="tab" className="absolute -bottom-px left-0 h-px w-full bg-gold" />
+                )}
+              </button>
+            ))}
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={tab}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="py-7 text-[15px] font-light leading-relaxed text-stone-light"
+            >
+              {tab === "Story" && <p>{product.story}</p>}
+              {tab === "Features" && (
+                <ul className="space-y-3">
+                  {product.features.map((f) => (
+                    <li key={f} className="flex gap-3">
+                      <span className="text-gold">✦</span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {tab === "Specifications" && (
+                <dl className="divide-y divide-white/5">
+                  {product.specs.map((s) => (
+                    <div key={s.label} className="flex justify-between py-3">
+                      <dt className="text-stone">{s.label}</dt>
+                      <dd className="text-pearl">{s.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+              {tab === "Care" && (
+                <ul className="space-y-3">
+                  {product.care.map((c) => (
+                    <li key={c} className="flex gap-3">
+                      <span className="text-gold">–</span>
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </div>

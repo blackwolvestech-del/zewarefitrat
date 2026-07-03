@@ -15,9 +15,9 @@ export function BrandStory() {
   const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-ink-soft py-20 lg:py-28">
-      <div className="container-lux grid items-center gap-12 lg:grid-cols-2">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-sm lg:aspect-square">
+    <section ref={ref} className="section-light overflow-hidden py-section">
+      <div className="container-lux grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+        <div className="relative order-1 aspect-[4/5] overflow-hidden lg:order-none">
           <motion.div style={{ y }} className="absolute inset-[-8%]">
             <Image
               src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1400&q=85"
@@ -27,42 +27,43 @@ export function BrandStory() {
               className="object-cover"
             />
           </motion.div>
-          <div className="absolute inset-0 ring-1 ring-inset ring-gold/20" />
         </div>
 
         <Reveal>
-          <p className="eyebrow">Our Fitrat</p>
-          <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
-            Jewellery with a
-            <span className="gold-text"> soul of gold</span>
+          <p className="eyebrow">The House of Fitrat</p>
+          <h2 className="mt-5 font-serif text-h2 font-light">
+            Jewellery with a<br />
+            <span className="italic text-gold-deep">soul of gold</span>
           </h2>
-          <p className="mt-6 text-[15px] leading-relaxed text-stone-light">
-            <span className="font-urdu text-gold" dir="rtl">زیورِ فطرت</span> means
-            &ldquo;the jewellery of nature.&rdquo; We believe elegance is your
-            natural state — and the right piece simply reveals it.
+          <p className="mt-8 max-w-prose2 text-[16px] font-light leading-relaxed text-stone-dark">
+            <span className="font-urdu text-gold-deep" dir="rtl">
+              زیورِ فطرت
+            </span>{" "}
+            means &ldquo;the jewellery of nature.&rdquo; We believe elegance is
+            your natural state — and the right piece simply reveals it.
           </p>
-          <p className="mt-4 text-[15px] leading-relaxed text-stone-light">
+          <p className="mt-4 max-w-prose2 text-[16px] font-light leading-relaxed text-stone-dark">
             Every design is hand-finished, plated to resist tarnish, and tested
-            to be gentle on your skin. Museum-worthy craft, made accessible for
-            every celebration in Pakistan.
+            to be gentle on your skin. Atelier craft, made accessible for every
+            celebration in Pakistan.
           </p>
 
-          <div className="mt-8 grid grid-cols-3 gap-6">
+          <div className="mt-12 grid grid-cols-3 gap-8 border-t border-ink/10 pt-8">
             {[
               { n: "20k+", l: "Happy customers" },
-              { n: "4.9★", l: "Average rating" },
+              { n: "4.9", l: "Average rating" },
               { n: "48h", l: "Dispatch time" },
             ].map((stat) => (
               <div key={stat.l}>
-                <p className="gold-text font-serif text-3xl">{stat.n}</p>
-                <p className="mt-1 text-[11px] uppercase tracking-wide2 text-stone">
+                <p className="font-serif text-4xl font-light text-ink">{stat.n}</p>
+                <p className="mt-2 text-[10px] uppercase tracking-wide2 text-stone-dark">
                   {stat.l}
                 </p>
               </div>
             ))}
           </div>
 
-          <Link href="/about" className="btn-outline mt-9">
+          <Link href="/about" className="btn-outline mt-12 text-ink">
             Read Our Story
           </Link>
         </Reveal>

@@ -8,16 +8,18 @@ import { motion } from "framer-motion";
 
 export function Collections() {
   return (
-    <section className="container-lux py-20 lg:py-28">
-      <Reveal className="text-center">
+    <section className="container-lux py-section">
+      <Reveal className="mx-auto max-w-xl text-center">
         <p className="eyebrow">Curated Worlds</p>
-        <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
-          Shop by Collection
-        </h2>
+        <h2 className="mt-4 font-serif text-h2 font-light">Shop by Collection</h2>
+        <p className="mx-auto mt-5 max-w-md text-[15px] font-light leading-relaxed text-stone-light">
+          Three edits, one philosophy — jewellery that reveals the elegance you
+          already carry.
+        </p>
       </Reveal>
 
-      <Stagger className="mt-12 grid gap-5 md:grid-cols-3">
-        {collections.map((c) => (
+      <Stagger className="mt-16 grid gap-6 md:grid-cols-3">
+        {collections.map((c, i) => (
           <motion.div key={c.slug} variants={staggerItem}>
             <Link
               href={`/shop?collection=${c.slug}`}
@@ -28,14 +30,22 @@ export function Collections() {
                 alt={c.name}
                 fill
                 sizes="(max-width:768px) 100vw, 33vw"
-                className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
+                className="object-cover transition-transform duration-[1400ms] ease-lux group-hover:scale-[1.06]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent transition-opacity duration-500 group-hover:from-ink/95" />
-              <div className="absolute inset-x-0 bottom-0 p-7">
-                <h3 className="font-serif text-2xl text-pearl">{c.name}</h3>
-                <p className="mt-1 text-[13px] text-stone-light">{c.description}</p>
-                <span className="mt-4 inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-wide2 text-gold opacity-0 transition-all duration-500 group-hover:opacity-100">
-                  Discover <span aria-hidden>→</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-transparent transition-opacity duration-700 group-hover:from-ink" />
+              <div className="absolute inset-x-0 bottom-0 p-8">
+                <span className="text-[10px] uppercase tracking-luxe text-gold">
+                  N&deg; {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-3 font-serif text-3xl font-light text-pearl">
+                  {c.name}
+                </h3>
+                <p className="mt-2 max-w-[26ch] text-[13px] font-light text-stone-light">
+                  {c.description}
+                </p>
+                <span className="mt-5 inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-luxe text-pearl">
+                  <span className="h-px w-6 bg-gold transition-all duration-500 group-hover:w-10" />
+                  Discover
                 </span>
               </div>
             </Link>

@@ -4,113 +4,113 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "24%"]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const fade = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
   return (
     <section
       ref={ref}
-      className="relative h-[100svh] min-h-[640px] w-full overflow-hidden"
+      className="relative h-[100svh] min-h-[620px] w-full overflow-hidden bg-ink"
     >
-      {/* Cinematic video background */}
       <motion.div style={{ y, scale }} className="absolute inset-0">
         <video
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover object-center"
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
           poster="/videos/hero-poster.jpg"
-          aria-label="ZEWARE FITRAT jewellery collection film"
+          aria-label="ZEWARE FITRAT editorial jewellery film"
         >
-          <source src="/videos/hero.mp4" type="video/mp4" />
+          <source src="/videos/newbanner.mov" type="video/quicktime" />
+          <source src="/videos/newbanner.mov" type="video/mp4" />
         </video>
       </motion.div>
 
-      {/* Cinematic gradients */}
-      <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/55" />
-      <div className="absolute inset-0 bg-gradient-to-r from-ink/60 via-transparent to-ink/25" />
-      {/* Subtle gold vignette glow */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 50% at 50% 85%, rgba(201,162,75,0.14), transparent 70%)",
-        }}
-      />
+      {/* Editorial tonal overlays — restrained */}
+      <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-ink/40" />
+      <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-transparent to-transparent" />
 
+      {/* Content — bottom-left editorial on desktop, centered on mobile */}
       <motion.div
-        style={{ opacity }}
-        className="container-lux relative flex h-full flex-col items-center justify-end pb-28 text-center sm:justify-center sm:pb-0"
+        style={{ opacity: fade }}
+        className="container-lux absolute inset-0 flex flex-col items-center justify-end pb-24 text-center sm:pb-28 lg:items-start lg:justify-end lg:pb-24 lg:text-left"
       >
+        <motion.span
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 0.4, duration: 1, ease }}
+          className="mb-7 h-px w-16 origin-left bg-gold"
+        />
         <motion.p
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="eyebrow"
+          transition={{ delay: 0.5, duration: 0.9, ease }}
+          className="eyebrow text-pearl/70"
         >
-          Premium Artificial &amp; Fashion Jewellery
+          Fine Fashion Jewellery · Pakistan
         </motion.p>
 
         <motion.h1
-          initial={{ opacity: 0, y: 26 }}
+          initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-4 max-w-4xl text-balance font-serif text-[15vw] leading-[0.95] sm:mt-5 sm:text-6xl lg:text-8xl"
+          transition={{ delay: 0.62, duration: 1, ease }}
+          className="mt-5 max-w-[14ch] text-balance font-serif text-display font-light text-pearl"
         >
-          Adorn Your
-          <br />
-          <span className="gold-text-shimmer italic">Fitrat</span>
+          Adorn your{" "}
+          <span className="italic text-gold-light">Fitrat</span>
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.9 }}
-          className="mt-5 max-w-lg text-balance text-sm leading-relaxed text-pearl/85 sm:mt-6 sm:text-base"
+          transition={{ delay: 0.75, duration: 0.9, ease }}
+          className="mt-6 max-w-md text-pretty text-[15px] font-light leading-relaxed text-pearl/75"
         >
-          Hand-finished jewellery that carries the glow of gold — crafted for
-          weddings, celebrations and the woman who is her own occasion.
+          Hand-finished pieces with the presence of fine jewellery — composed
+          for weddings, celebrations, and the everyday extraordinary.
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.75, duration: 0.9 }}
-          className="mt-8 flex w-full flex-col items-center gap-3 px-2 sm:mt-9 sm:w-auto sm:flex-row sm:gap-4 sm:px-0"
+          transition={{ delay: 0.88, duration: 0.9, ease }}
+          className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4"
         >
           <Link href="/shop" className="btn-gold w-full sm:w-auto">
-            Shop the Collection
+            Explore the Collection
           </Link>
           <Link
             href="/shop?collection=shaadi-couture"
-            className="btn-outline w-full sm:w-auto"
+            className="btn-outline w-full text-pearl sm:w-auto"
           >
-            Explore Bridal
+            The Bridal Édit
           </Link>
         </motion.div>
       </motion.div>
 
       {/* Scroll cue */}
       <motion.div
-        style={{ opacity }}
-        className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
+        style={{ opacity: fade }}
+        className="absolute bottom-8 right-8 hidden flex-col items-center gap-3 lg:flex"
       >
-        <span className="text-[10px] uppercase tracking-luxe text-stone-light">
+        <span className="text-[10px] uppercase tracking-luxe text-pearl/50 [writing-mode:vertical-rl]">
           Scroll
         </span>
         <motion.span
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-          className="h-8 w-px bg-gradient-to-b from-gold to-transparent"
+          animate={{ scaleY: [0.3, 1, 0.3] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          className="h-10 w-px origin-top bg-gradient-to-b from-gold to-transparent"
         />
       </motion.div>
     </section>
