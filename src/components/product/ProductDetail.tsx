@@ -53,7 +53,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
       <div>
         <p className="eyebrow">{product.collection}</p>
-        <h1 className="mt-4 font-serif text-h1 font-light leading-[1]">
+        <h1 className="mt-4 font-serif text-h2 font-light leading-[1]">
           {product.name}
         </h1>
         <p className="mt-3 text-[16px] font-light italic text-stone-light">

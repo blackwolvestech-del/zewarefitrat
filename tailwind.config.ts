@@ -47,11 +47,11 @@ const config: Config = {
         urdu: ["var(--font-nastaliq)", "serif"],
       },
       fontSize: {
-        // Fluid editorial type scale
-        display: ["clamp(3.4rem, 11vw, 10rem)", { lineHeight: "0.94", letterSpacing: "-0.02em" }],
-        h1: ["clamp(2.6rem, 7vw, 6rem)", { lineHeight: "0.98", letterSpacing: "-0.015em" }],
-        h2: ["clamp(2.1rem, 5vw, 4rem)", { lineHeight: "1.03", letterSpacing: "-0.01em" }],
-        h3: ["clamp(1.6rem, 3.2vw, 2.5rem)", { lineHeight: "1.1", letterSpacing: "-0.005em" }],
+        // Fluid editorial type scale — capped so wide screens stay refined
+        display: ["clamp(3.4rem, 9vw, 8.5rem)", { lineHeight: "0.94", letterSpacing: "-0.02em" }],
+        h1: ["clamp(2.6rem, 6vw, 5.25rem)", { lineHeight: "0.98", letterSpacing: "-0.015em" }],
+        h2: ["clamp(2.1rem, 4.5vw, 3.75rem)", { lineHeight: "1.03", letterSpacing: "-0.01em" }],
+        h3: ["clamp(1.6rem, 3vw, 2.4rem)", { lineHeight: "1.1", letterSpacing: "-0.005em" }],
       },
       letterSpacing: {
         luxe: "0.32em",

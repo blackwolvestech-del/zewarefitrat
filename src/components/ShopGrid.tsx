@@ -57,7 +57,7 @@ export function ShopGrid({
   return (
     <div>
       {/* Filter bar */}
-      <div className="sticky top-[64px] z-20 -mx-5 border-b border-white/10 bg-ink/85 px-5 py-4 backdrop-blur-xl sm:mx-0 sm:rounded-none sm:px-0">
+      <div className="sticky top-[64px] z-20 -mx-5 border-b border-white/10 bg-ink/85 px-5 py-4 backdrop-blur-xl sm:mx-0 sm:rounded-none sm:px-0 lg:top-[72px]">
         <div className="flex items-center gap-3 overflow-x-auto no-scrollbar">
           <div className="flex gap-2">
             {["All", ...categories].map((c) => (
