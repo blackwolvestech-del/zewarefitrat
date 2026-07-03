@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #c9a24b;
+  --gold-light: #e8c874;
+  --ink: #0a0a0a;
+}
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink text-pearl font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: #0a0a0a;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .container-lux {
+    @apply mx-auto w-full max-w-container px-5 sm:px-8 lg:px-12;
+  }
+
+  .eyebrow {
+    @apply text-[11px] font-sans font-medium uppercase tracking-luxe text-gold;
+  }
+
+  .gold-text {
+    @apply bg-gold-gradient bg-clip-text text-transparent;
+    background-size: 200% auto;
+  }
+
+  .gold-text-shimmer {
+    @apply bg-gold-gradient bg-clip-text text-transparent animate-shimmer;
+    background-size: 200% auto;
+  }
+
+  .hairline {
+    @apply h-px w-full bg-gold-line;
+  }
+
+  /* Luxury button — filled gold */
+  .btn-gold {
+    @apply relative inline-flex items-center justify-center overflow-hidden rounded-full
+    bg-gold-gradient px-8 py-3.5 text-[12px] font-semibold uppercase tracking-wide2
+    text-ink transition-all duration-500 ease-out;
+    background-size: 200% auto;
+  }
+  .btn-gold:hover {
+    background-position: right center;
+    box-shadow: 0 10px 40px -12px rgba(201, 162, 75, 0.6);
+  }
+
+  /* Luxury button — outline */
+  .btn-outline {
+    @apply relative inline-flex items-center justify-center rounded-full border border-gold/40
+    px-8 py-3.5 text-[12px] font-semibold uppercase tracking-wide2 text-pearl
+    transition-all duration-500 ease-out hover:border-gold hover:text-gold;
+  }
+
+  .link-underline {
+    @apply relative inline-block after:absolute after:bottom-0 after:left-0 after:h-px
+    after:w-0 after:bg-gold after:transition-all after:duration-500 hover:after:w-full;
+  }
+
+  .glass {
+    @apply border border-white/10 bg-white/[0.03] backdrop-blur-xl;
+  }
+
+  .card-lux {
+    @apply relative overflow-hidden rounded-sm bg-ink-soft;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #242424;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
