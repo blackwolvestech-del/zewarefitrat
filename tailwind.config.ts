@@ -15,12 +15,13 @@ const config: Config = {
           800: "#1A1815",
           700: "#252220",
         },
-        // Metallic gold — icons, numbers, borders, logo mark
+        // Logo gold — sampled from the ZEWARE FITRAT wordmark (avg #C7AB78,
+        // highlight #F3E2B4). Icons, numbers, borders, hairlines, logo mark.
         gold: {
-          DEFAULT: "#D4AF37",
-          light: "#E2C55D",
-          deep: "#C5A059",
-          pale: "#EFE3B8",
+          DEFAULT: "#C7AB78",
+          light: "#E3CF9E",
+          deep: "#A6884F",
+          pale: "#F3E2B4",
         },
         // Vibrant yellow — high-contrast buttons, badges, banner highlights
         accent: {
@@ -64,11 +65,11 @@ const config: Config = {
         prose2: "68ch",
       },
       backgroundImage: {
-        // Metallic sheen — used sparingly on small accents only
+        // Logo-gold sheen — used sparingly on small accents only
         "gold-gradient":
-          "linear-gradient(135deg, #C5A059 0%, #D4AF37 50%, #B8963E 100%)",
+          "linear-gradient(135deg, #A6884F 0%, #C7AB78 45%, #F3E2B4 70%, #A6884F 100%)",
         "gold-line":
-          "linear-gradient(90deg, transparent, rgba(212,175,55,0.6) 50%, transparent)",
+          "linear-gradient(90deg, transparent, rgba(199,171,120,0.65) 50%, transparent)",
       },
       boxShadow: {
         lux: "0 30px 80px -40px rgba(0,0,0,0.7)",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
 export function LoadingScreen() {
@@ -41,14 +42,15 @@ export function LoadingScreen() {
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-center"
           >
-            <span
-              className="font-urdu text-4xl text-gold sm:text-5xl"
-              dir="rtl"
-              aria-hidden
-            >
-              زیورِ فطرت
-            </span>
-            <span className="mt-6 font-serif text-lg tracking-[0.4em] text-pearl">
+            <Image
+              src="/brand/logo.png"
+              alt="ZEWARE FITRAT"
+              width={262}
+              height={120}
+              priority
+              className="h-16 w-auto sm:h-20"
+            />
+            <span className="mt-6 font-serif text-base tracking-[0.4em] text-pearl">
               ZEWARE FITRAT
             </span>
           </motion.div>
