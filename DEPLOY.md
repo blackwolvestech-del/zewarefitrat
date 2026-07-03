@@ -4,11 +4,30 @@ The site is a Next.js app with a small **file-based database**. Products, orders
 and uploaded images/videos are stored on disk under `DATA_DIR` (default `/app/data`).
 You **must** attach a persistent volume there, or every deploy resets your data.
 
-There are two supported ways to deploy. Pick one.
+Pick the option that matches your Coolify build pack.
 
 ---
 
-## Option A — Docker Compose (recommended, volume is automatic)
+## Option A — Nixpacks (the Coolify default)
+
+Coolify auto-detects Next.js and runs `npm run build` then `npm run start`.
+No Dockerfile needed. **Important: this repo must NOT set `output: "standalone"`
+in `next.config.mjs`** — `next start` returns 500 on every route with it, which
+shows up as Traefik's bare "404 page not found".
+
+1. Point the Coolify app at this repo (build pack = Nixpacks).
+2. Add environment variables:
+   - `ADMIN_PASSWORD` = *your strong password*
+3. **Add persistent storage** so products/orders/uploads survive deploys:
+   - Coolify → your app → **Storages** → add a volume
+   - Mount path: `/app/data`  *(this is the container's working dir + `/data`)*
+   - Then set env `DATA_DIR=/app/data` (matches the mount).
+4. Make sure a **Domain** is set on the app (Coolify generates the proxy route from it).
+5. Deploy.
+
+---
+
+## Option B — Docker Compose (volume is automatic)
 
 1. In Coolify, create a new resource → **Docker Compose** → point it at this GitHub repo.
 2. Coolify reads `docker-compose.yml`, which already defines the `zf_data` volume
@@ -21,7 +40,7 @@ That's it — the `zf_data` volume survives redeploys, so products/orders/upload
 
 ---
 
-## Option B — Dockerfile build pack
+## Option C — Dockerfile build pack
 
 1. In Coolify, create a new resource → **Dockerfile** (or "Application" with build
    pack = Dockerfile) → point it at this repo. It uses the included `Dockerfile`.
