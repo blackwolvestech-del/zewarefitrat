@@ -161,7 +161,7 @@ export function CheckoutClient() {
                 type="checkbox"
                 checked={giftNote}
                 onChange={(e) => setGiftNote(e.target.checked)}
-                className="h-4 w-4 accent-[#C9A24B]"
+                className="h-4 w-4 accent-[#D4AF37]"
               />
               This is a gift — add a complimentary note &amp; gift wrap
             </label>
@@ -194,7 +194,7 @@ export function CheckoutClient() {
                 <div key={`${item.id}-${item.color}`} className="flex gap-3">
                   <div className="relative h-16 w-14 shrink-0 overflow-hidden rounded-sm">
                     <Image src={item.image} alt="" fill sizes="56px" className="object-cover" />
-                    <span className="absolute -right-0 -top-0 flex h-5 w-5 items-center justify-center rounded-bl bg-gold text-[10px] font-bold text-ink">
+                    <span className="absolute -right-0 -top-0 flex h-5 w-5 items-center justify-center rounded-bl bg-accent text-[10px] font-bold text-ink">
                       {item.qty}
                     </span>
                   </div>
@@ -289,7 +289,7 @@ function PayOption({
         <span className="flex items-center gap-2">
           <span className={`text-[15px] ${active ? "text-gold" : "text-pearl"}`}>{title}</span>
           {badge && (
-            <span className="rounded-full bg-gold-gradient px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wide2 text-ink">
+            <span className="rounded-full bg-accent px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wide2 text-ink">
               {badge}
             </span>
           )}

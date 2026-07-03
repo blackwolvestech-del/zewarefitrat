@@ -15,12 +15,17 @@ const config: Config = {
           800: "#1A1815",
           700: "#252220",
         },
-        // Muted antique gold — accent only
+        // Metallic gold — icons, numbers, borders, logo mark
         gold: {
-          DEFAULT: "#B08D57",
-          light: "#C6A46B",
-          deep: "#8A6B3C",
-          pale: "#E8DCC4",
+          DEFAULT: "#D4AF37",
+          light: "#E2C55D",
+          deep: "#C5A059",
+          pale: "#EFE3B8",
+        },
+        // Vibrant yellow — high-contrast buttons, badges, banner highlights
+        accent: {
+          DEFAULT: "#F1C40F",
+          deep: "#E6B800",
         },
         // Warm porcelain (soft white)
         pearl: {
@@ -59,11 +64,11 @@ const config: Config = {
         prose2: "68ch",
       },
       backgroundImage: {
-        // Refined, low-contrast metallic — used sparingly on small accents only
+        // Metallic sheen — used sparingly on small accents only
         "gold-gradient":
-          "linear-gradient(135deg, #8A6B3C 0%, #C6A46B 50%, #9A7B45 100%)",
+          "linear-gradient(135deg, #C5A059 0%, #D4AF37 50%, #B8963E 100%)",
         "gold-line":
-          "linear-gradient(90deg, transparent, rgba(176,141,87,0.6) 50%, transparent)",
+          "linear-gradient(90deg, transparent, rgba(212,175,55,0.6) 50%, transparent)",
       },
       boxShadow: {
         lux: "0 30px 80px -40px rgba(0,0,0,0.7)",

@@ -34,7 +34,7 @@ export function Navbar() {
       {/* Announcement */}
       <div className="relative z-50 bg-ink-soft text-center text-[10px] uppercase tracking-luxe text-stone-light">
         <div className="container-lux flex items-center justify-center gap-3 py-2.5">
-          <span className="text-gold">Complimentary delivery over Rs 5,000</span>
+          <span className="font-semibold text-accent">Complimentary delivery over Rs 5,000</span>
           <span className="hidden h-3 w-px bg-white/15 sm:block" />
           <span className="hidden sm:inline">Cash on Delivery Nationwide</span>
         </div>
@@ -91,7 +91,7 @@ export function Navbar() {
             >
               <HeartIcon />
               {wishCount > 0 && (
-                <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[9px] font-bold text-ink">
+                <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[9px] font-bold text-ink">
                   {wishCount}
                 </span>
               )}
@@ -108,7 +108,7 @@ export function Navbar() {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
-                    className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[9px] font-bold text-ink"
+                    className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[9px] font-bold text-ink"
                   >
                     {count}
                   </motion.span>

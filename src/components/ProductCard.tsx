@@ -66,12 +66,12 @@ export function ProductCard({
           {/* Labels — quiet uppercase, no gradient */}
           <div className="absolute left-0 top-4 flex flex-col gap-2">
             {product.badge && (
-              <span className="bg-ink/60 px-3 py-1.5 text-[9px] font-medium uppercase tracking-luxe text-pearl backdrop-blur-sm">
+              <span className="bg-ink/60 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-luxe text-accent backdrop-blur-sm">
                 {product.badge}
               </span>
             )}
             {discount > 0 && (
-              <span className="bg-gold px-3 py-1.5 text-[9px] font-semibold uppercase tracking-wide2 text-ink">
+              <span className="bg-accent px-3 py-1.5 text-[9px] font-bold uppercase tracking-wide2 text-ink">
                 −{discount}%
               </span>
             )}
@@ -100,7 +100,7 @@ export function ProductCard({
           initial={false}
           animate={{ y: hover ? 0 : 12, opacity: hover ? 1 : 0 }}
           transition={{ duration: 0.45, ease }}
-          className="absolute inset-x-0 bottom-0 hidden bg-pearl/95 py-3.5 text-[10px] font-semibold uppercase tracking-luxe text-ink backdrop-blur transition-colors hover:bg-gold lg:block"
+          className="absolute inset-x-0 bottom-0 hidden bg-pearl/95 py-3.5 text-[10px] font-semibold uppercase tracking-luxe text-ink backdrop-blur transition-colors hover:bg-accent lg:block"
         >
           Add to Bag
         </motion.button>

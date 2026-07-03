@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --gold: #b08d57;
+  --gold: #d4af37;
+  --accent: #f1c40f;
   --ink: #0b0a09;
   --pearl: #f4f0e8;
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
@@ -69,11 +70,11 @@
     @apply h-px w-full bg-current opacity-10;
   }
 
-  /* ——— Buttons: quiet, precise, editorial ——— */
+  /* ——— Buttons: vibrant accent for primary CTAs ——— */
   .btn-gold {
-    @apply relative inline-flex items-center justify-center rounded-none border border-gold/70
-    bg-gold px-9 py-4 font-sans text-[11px] font-semibold uppercase tracking-wide2
-    text-ink transition-all duration-500 ease-lux hover:bg-gold-deep hover:border-gold-deep;
+    @apply relative inline-flex items-center justify-center rounded-none border border-accent
+    bg-accent px-9 py-4 font-sans text-[11px] font-bold uppercase tracking-wide2
+    text-ink transition-all duration-500 ease-lux hover:bg-accent-deep hover:border-accent-deep;
   }
 
   .btn-outline {
