@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { formatPKR, type Product } from "@/data/products";
 import { useCart } from "@/context/CartContext";
@@ -20,6 +20,21 @@ export function ProductCard({
   const { add } = useCart();
   const { has, toggle } = useWishlist();
   const [hover, setHover] = useState(false);
+  // mount the card video lazily on first hover so the grid never
+  // downloads videos the customer doesn't ask for
+  const [videoOn, setVideoOn] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (hover) {
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+      v.currentTime = 0;
+    }
+  }, [hover, videoOn]);
   const discount = product.compareAt
     ? Math.round(((product.compareAt - product.price) / product.compareAt) * 100)
     : 0;
@@ -32,7 +47,10 @@ export function ProductCard({
         show: { opacity: 1, y: 0, transition: { duration: 0.9, ease } },
       }}
       className="group"
-      onMouseEnter={() => setHover(true)}
+      onMouseEnter={() => {
+        setHover(true);
+        if (product.video) setVideoOn(true);
+      }}
       onMouseLeave={() => setHover(false)}
     >
       <div className="relative">
@@ -48,10 +66,25 @@ export function ProductCard({
             priority={priority}
             sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 25vw"
             className={`object-cover transition-all duration-[1100ms] ease-lux ${
-              hover && product.images[1] ? "opacity-0" : "opacity-100"
+              hover && (product.video || product.images[1]) ? "opacity-0" : "opacity-100"
             } group-hover:scale-[1.04]`}
           />
-          {product.images[1] && (
+          {/* video preview takes priority over the second image on hover */}
+          {product.video && videoOn && (
+            <video
+              ref={videoRef}
+              src={product.video}
+              muted
+              loop
+              playsInline
+              autoPlay
+              preload="metadata"
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-lux ${
+                hover ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          )}
+          {!product.video && product.images[1] && (
             <Image
               src={product.images[1]}
               alt=""
