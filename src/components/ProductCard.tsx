@@ -144,7 +144,7 @@ export function ProductCard({
           {product.collection}
         </p>
         <Link href={`/product/${product.slug}`}>
-          <h3 className="mt-2 font-serif text-[22px] font-normal leading-none text-pearl transition-colors duration-300 group-hover:text-gold-light">
+          <h3 className="mt-2 font-serif text-[22px] font-normal leading-[1.12] text-pearl transition-colors duration-300 group-hover:text-gold-light">
             {product.name}
           </h3>
         </Link>

@@ -4,7 +4,7 @@
 
 :root {
   --gold: #c7ab78;
-  --accent: #f1c40f;
+  --accent: #c7ab78;
   --ink: #0b0a09;
   --pearl: #f4f0e8;
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
@@ -24,7 +24,6 @@
   body {
     @apply bg-ink text-pearl font-sans antialiased;
     overflow-x: hidden;
-    font-feature-settings: "ss01", "cv01";
   }
 
   ::selection {
@@ -32,8 +31,10 @@
     color: #0b0a09;
   }
 
+  /* Bodoni Moda's lightest weight is 400 — the Didone contrast supplies
+     the elegance, so headings stay at normal weight */
   h1, h2, h3, h4 {
-    @apply font-serif font-light;
+    @apply font-serif font-normal;
   }
 
   /* Light (porcelain) sections invert the palette */
@@ -70,10 +71,10 @@
     @apply h-px w-full bg-current opacity-10;
   }
 
-  /* ——— Buttons: vibrant accent for primary CTAs ——— */
+  /* ——— Buttons: champagne gold for primary CTAs ——— */
   .btn-gold {
     @apply relative inline-flex items-center justify-center rounded-none border border-accent
-    bg-accent px-9 py-4 font-sans text-[11px] font-bold uppercase tracking-wide2
+    bg-accent px-9 py-4 font-sans text-[11px] font-medium uppercase tracking-wide2
     text-ink transition-all duration-500 ease-lux hover:bg-accent-deep hover:border-accent-deep;
   }
 

@@ -23,10 +23,11 @@ const config: Config = {
           deep: "#A6884F",
           pale: "#F3E2B4",
         },
-        // Vibrant yellow — high-contrast buttons, badges, banner highlights
+        // CTA tier — same champagne family as the wordmark, so buttons,
+        // badges and banner highlights sit inside the logo-gold system
         accent: {
-          DEFAULT: "#F1C40F",
-          deep: "#E6B800",
+          DEFAULT: "#C7AB78",
+          deep: "#A6884F",
         },
         // Warm porcelain (soft white)
         pearl: {
@@ -42,16 +43,17 @@ const config: Config = {
         },
       },
       fontFamily: {
-        serif: ["var(--font-cormorant)", "Georgia", "serif"],
-        sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
+        serif: ["var(--font-bodoni)", "Didot", "Bodoni MT", "Georgia", "serif"],
+        sans: ["var(--font-jost)", "Futura", "system-ui", "sans-serif"],
         urdu: ["var(--font-nastaliq)", "serif"],
       },
       fontSize: {
-        // Fluid editorial type scale — capped so wide screens stay refined
-        display: ["clamp(3.4rem, 9vw, 8.5rem)", { lineHeight: "0.94", letterSpacing: "-0.02em" }],
-        h1: ["clamp(2.6rem, 6vw, 5.25rem)", { lineHeight: "0.98", letterSpacing: "-0.015em" }],
-        h2: ["clamp(2.1rem, 4.5vw, 3.75rem)", { lineHeight: "1.03", letterSpacing: "-0.01em" }],
-        h3: ["clamp(1.6rem, 3vw, 2.4rem)", { lineHeight: "1.1", letterSpacing: "-0.005em" }],
+        // Fluid editorial type scale — Didone display wants near-neutral
+        // tracking; hairline serifs collapse if tracked negative
+        display: ["clamp(3.2rem, 8.5vw, 8rem)", { lineHeight: "1.0", letterSpacing: "-0.01em" }],
+        h1: ["clamp(2.5rem, 5.75vw, 5rem)", { lineHeight: "1.04", letterSpacing: "-0.005em" }],
+        h2: ["clamp(2rem, 4.25vw, 3.5rem)", { lineHeight: "1.08", letterSpacing: "0" }],
+        h3: ["clamp(1.55rem, 3vw, 2.3rem)", { lineHeight: "1.14", letterSpacing: "0" }],
       },
       letterSpacing: {
         luxe: "0.32em",

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Cormorant_Garamond, Noto_Nastaliq_Urdu } from "next/font/google";
+import { Jost, Bodoni_Moda, Noto_Nastaliq_Urdu } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/context/Providers";
 import { Navbar } from "@/components/Navbar";
@@ -10,17 +10,22 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { site } from "@/lib/site";
 
-const manrope = Manrope({
+// Jost — Futura-style geometric sans (the Louis Vuitton letterform family).
+// Light-to-medium uppercase with wide tracking for labels, nav, buttons.
+const jost = Jost({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-manrope",
+  variable: "--font-jost",
   display: "swap",
 });
-const cormorant = Cormorant_Garamond({
+// Bodoni Moda — high-contrast Didone with optical sizing; hairline serifs
+// sharpen at display sizes (Vogue / high-jewellery editorial look).
+const bodoni = Bodoni_Moda({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: "variable",
   style: ["normal", "italic"],
-  variable: "--font-cormorant",
+  axes: ["opsz"],
+  variable: "--font-bodoni",
   display: "swap",
 });
 const nastaliq = Noto_Nastaliq_Urdu({
@@ -97,7 +102,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${cormorant.variable} ${nastaliq.variable}`}
+      className={`${jost.variable} ${bodoni.variable} ${nastaliq.variable}`}
     >
       <body>
         <script
