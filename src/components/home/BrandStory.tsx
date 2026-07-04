@@ -20,7 +20,7 @@ export function BrandStory() {
         <div className="relative order-1 aspect-[4/5] overflow-hidden lg:order-none">
           <motion.div style={{ y }} className="absolute inset-[-8%]">
             <Image
-              src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1400&q=85"
+              src="https://images.unsplash.com/photo-1633934542430-0905ccb5f050?auto=format&fit=crop&w=1920&q=85"
               alt="Artisan hand-setting a ZEWARE FITRAT jewellery piece"
               fill
               sizes="(max-width:1024px) 100vw, 50vw"

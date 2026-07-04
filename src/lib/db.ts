@@ -82,8 +82,41 @@ function readJson<T>(file: string, fallback: T): T {
 
 // ————— Products —————
 
+/**
+ * One-shot per boot: refresh placeholder photography from the seed.
+ *
+ * The store is seeded once and then lives in the persistent volume, so
+ * curated-image updates in the seed never reach deployed stores on their
+ * own. This swaps a product's images to the seed's only while they are
+ * ALL still Unsplash placeholders — the moment the admin uploads real
+ * media (or mixes any non-Unsplash URL in), the product is left alone.
+ */
+let placeholderRefreshDone = false;
+function refreshPlaceholderImages() {
+  if (placeholderRefreshDone) return;
+  placeholderRefreshDone = true;
+  const list = readJson<Product[]>(PRODUCTS_FILE, []);
+  if (!list.length) return;
+  const isPlaceholder = (u: string) =>
+    u.startsWith("https://images.unsplash.com/");
+  let changed = false;
+  for (const p of list) {
+    const seed = seedProducts.find((s) => s.id === p.id);
+    if (!seed || !p.images?.length) continue;
+    if (
+      p.images.every(isPlaceholder) &&
+      JSON.stringify(p.images) !== JSON.stringify(seed.images)
+    ) {
+      p.images = [...seed.images];
+      changed = true;
+    }
+  }
+  if (changed) saveProducts(list);
+}
+
 export function getProducts(): Product[] {
   ensureStore();
+  refreshPlaceholderImages();
   return readJson<Product[]>(PRODUCTS_FILE, []);
 }
 

@@ -35,9 +35,11 @@ export type Product = {
   reviews: Review[];
 };
 
-// High-end placeholder photography (Unsplash). Replace with your own studio shots.
+// Editorial placeholder photography (Unsplash), curated to the Atelier Noir
+// mood — dark grounds, warm gold, campaign-style model shots. Every ID is
+// availability-checked; replace with studio shots when ready.
 const img = (id: string) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=80`;
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1920&q=85`;
 
 export const products: Product[] = [
   {
@@ -56,9 +58,9 @@ export const products: Product[] = [
     rating: 4.9,
     reviewCount: 214,
     images: [
-      img("photo-1599643478518-a784e5dc4c8f"),
+      img("photo-1599459183200-59c7687a0275"),
+      img("photo-1601121141461-9d6647bca1ed"),
       img("photo-1611652022419-a9419f74343d"),
-      img("photo-1535632066927-ab7c9ab60908"),
     ],
     colors: ["Antique Gold", "Rose Gold", "Kundan White"],
     story:
@@ -120,9 +122,9 @@ export const products: Product[] = [
     rating: 4.8,
     reviewCount: 176,
     images: [
-      img("photo-1630019852942-f89202989a59"),
       img("photo-1617038220319-276d3cfab638"),
-      img("photo-1596944924616-7b38e7cfac36"),
+      img("photo-1601821765780-754fa98637c1"),
+      img("photo-1600721391689-2564bb8055de"),
     ],
     colors: ["Antique Gold", "Meenakari Red", "Emerald"],
     story:
@@ -171,9 +173,9 @@ export const products: Product[] = [
     rating: 4.9,
     reviewCount: 132,
     images: [
-      img("photo-1602751584552-8ba73aad10e1"),
-      img("photo-1535556116002-6281ff3e9f36"),
-      img("photo-1611591437281-460bfbe1220a"),
+      img("photo-1515562141207-7a88fb7ce338"),
+      img("photo-1590548784585-643d2b9f2925"),
+      img("photo-1611085583191-a3b181a88401"),
     ],
     colors: ["Uncut Polki", "Champagne", "Ivory Pearl"],
     story:
@@ -218,9 +220,9 @@ export const products: Product[] = [
     rating: 4.7,
     reviewCount: 88,
     images: [
-      img("photo-1611085583191-a3b181a88401"),
-      img("photo-1573408301185-9146fe634ad0"),
-      img("photo-1515562141207-7a88fb7ce338"),
+      img("photo-1602173574767-37ac01994b2a"),
+      img("photo-1596944924616-7b38e7cfac36"),
+      img("photo-1611107683227-e9060eccd846"),
     ],
     colors: ["Ivory Pearl", "Grey Pearl", "Rose"],
     story:
@@ -262,8 +264,9 @@ export const products: Product[] = [
     rating: 4.6,
     reviewCount: 64,
     images: [
+      img("photo-1611955167811-4711904bb9f8"),
       img("photo-1605100804763-247f67b3557e"),
-      img("photo-1603561591411-07134e71a2a9"),
+      img("photo-1543294001-f7cd5d7fb516"),
     ],
     colors: ["Gold", "Rose Gold"],
     story:
@@ -295,8 +298,9 @@ export const products: Product[] = [
     rating: 4.9,
     reviewCount: 97,
     images: [
-      img("photo-1620656798932-902cc7e2c1a1"),
-      img("photo-1608042314453-ae338d80c427"),
+      img("photo-1601121141461-9d6647bca1ed"),
+      img("photo-1599643478518-a784e5dc4c8f"),
+      img("photo-1635767798638-3e25273a8236"),
     ],
     colors: ["Kundan Gold", "Emerald", "Ruby"],
     story:
@@ -327,8 +331,9 @@ export const products: Product[] = [
     rating: 4.8,
     reviewCount: 71,
     images: [
-      img("photo-1588444650733-d0767b753fef"),
-      img("photo-1573408301185-9146fe634ad0"),
+      img("photo-1626784215021-2e39ccf971cd"),
+      img("photo-1609245340409-cad2474ab1d5"),
+      img("photo-1600721391689-2564bb8055de"),
     ],
     colors: ["Antique Gold", "Silver"],
     story:
@@ -356,8 +361,9 @@ export const products: Product[] = [
     rating: 4.7,
     reviewCount: 53,
     images: [
-      img("photo-1611955167811-4711904bb9f8"),
-      img("photo-1515562141207-7a88fb7ce338"),
+      img("photo-1619119069152-a2b331eb392a"),
+      img("photo-1573408301185-9146fe634ad0"),
+      img("photo-1617117811969-97f441511dee"),
     ],
     colors: ["Gold", "Silver"],
     story:
@@ -399,19 +405,19 @@ export const collections = [
     slug: "shaadi-couture",
     name: "Shaadi Couture",
     description: "Bridal statement pieces for the big day.",
-    image: img("photo-1599643478518-a784e5dc4c8f"),
+    image: img("photo-1601121141461-9d6647bca1ed"),
   },
   {
     slug: "heritage",
     name: "Heritage",
     description: "Traditional silhouettes, reimagined light.",
-    image: img("photo-1630019852942-f89202989a59"),
+    image: img("photo-1617038220319-276d3cfab638"),
   },
   {
     slug: "everyday-luxe",
     name: "Everyday Luxe",
     description: "Quiet luxury for every day.",
-    image: img("photo-1611085583191-a3b181a88401"),
+    image: img("photo-1635767798638-3e25273a8236"),
   },
 ];
 
