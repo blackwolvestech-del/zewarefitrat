@@ -13,10 +13,11 @@ export function Gallery({
   name: string;
   video?: string;
 }) {
-  // slide list: images first, then video (if any)
+  // slide list: video first (so it's the main media when a customer opens
+  // the product), then images. No video → first image is the main view.
   const slides = [
-    ...images.map((src) => ({ type: "image" as const, src })),
     ...(video ? [{ type: "video" as const, src: video }] : []),
+    ...images.map((src) => ({ type: "image" as const, src })),
   ];
   const [active, setActive] = useState(0);
   const [zoom, setZoom] = useState(false);
@@ -53,11 +54,21 @@ export function Gallery({
             {slide.type === "image" ? (
               <Image src={slide.src} alt="" fill sizes="64px" className="object-cover" />
             ) : (
-              <span className="flex h-full w-full items-center justify-center bg-ink-800">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gold text-[10px] text-gold">
-                  ▶
+              <>
+                {/* real video frame as the thumbnail */}
+                <video
+                  src={slide.src}
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full object-cover"
+                />
+                <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-ink/30">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full border border-gold bg-ink/50 text-[10px] text-gold">
+                    ▶
+                  </span>
                 </span>
-              </span>
+              </>
             )}
           </button>
         ))}
