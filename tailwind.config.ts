@@ -49,18 +49,23 @@ const config: Config = {
       },
       fontSize: {
         // Fluid editorial type scale — Didone display wants near-neutral
-        // tracking; hairline serifs collapse if tracked negative
-        display: ["clamp(3.2rem, 8.5vw, 8rem)", { lineHeight: "1.0", letterSpacing: "-0.01em" }],
-        h1: ["clamp(2.5rem, 5.75vw, 5rem)", { lineHeight: "1.04", letterSpacing: "-0.005em" }],
-        h2: ["clamp(2rem, 4.25vw, 3.5rem)", { lineHeight: "1.08", letterSpacing: "0" }],
-        h3: ["clamp(1.55rem, 3vw, 2.3rem)", { lineHeight: "1.14", letterSpacing: "0" }],
+        // tracking; hairline serifs collapse if tracked negative.
+        // Caps are deliberately restrained: on wide screens luxury reads
+        // as air around the type, never as bigger type. Mobile floors
+        // are unchanged (the mobile design is approved as-is).
+        display: ["clamp(3.2rem, 8.5vw, 6rem)", { lineHeight: "1.0", letterSpacing: "-0.01em" }],
+        h1: ["clamp(2.5rem, 5.75vw, 4.25rem)", { lineHeight: "1.04", letterSpacing: "-0.005em" }],
+        h2: ["clamp(2rem, 4.25vw, 3.1rem)", { lineHeight: "1.08", letterSpacing: "0" }],
+        h3: ["clamp(1.55rem, 3vw, 2.1rem)", { lineHeight: "1.14", letterSpacing: "0" }],
       },
       letterSpacing: {
         luxe: "0.32em",
         wide2: "0.16em",
       },
       spacing: {
-        section: "clamp(3.75rem, 7vw, 7rem)",
+        // Desktop sections breathe harder than mobile — the extra air is
+        // most of what separates "template" from "maison"
+        section: "clamp(3.75rem, 8vw, 8.5rem)",
       },
       maxWidth: {
         container: "1440px",

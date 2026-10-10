@@ -49,7 +49,7 @@
 
 @layer components {
   .container-lux {
-    @apply mx-auto w-full max-w-container px-6 sm:px-10 lg:px-16;
+    @apply mx-auto w-full max-w-container px-6 sm:px-10 lg:px-16 xl:px-24;
   }
 
   .eyebrow {

@@ -46,7 +46,7 @@ export function ProductDetail({ product }: { product: Product }) {
   };
 
   return (
-    <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+    <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
       <div className="lg:sticky lg:top-28 lg:h-fit">
         <Gallery images={product.images} name={product.name} video={product.video} />
       </div>

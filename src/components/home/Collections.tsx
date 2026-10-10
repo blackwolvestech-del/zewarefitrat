@@ -18,7 +18,7 @@ export function Collections() {
         </p>
       </Reveal>
 
-      <Stagger className="mt-16 grid gap-6 md:grid-cols-3">
+      <Stagger className="mt-16 grid gap-6 md:grid-cols-3 lg:gap-8">
         {collections.map((c, i) => (
           <motion.div key={c.slug} variants={staggerItem}>
             <Link

@@ -60,12 +60,12 @@ export function Navbar() {
             </span>
           </button>
 
-          <div className="hidden lg:flex lg:flex-1 lg:items-center lg:gap-9">
+          <div className="hidden lg:flex lg:flex-1 lg:items-center lg:gap-10">
             {nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="link-underline text-[11px] font-medium uppercase tracking-wide2 text-pearl/80 transition-colors hover:text-pearl"
+                className="link-underline text-[11px] font-medium uppercase tracking-wide2 text-pearl/80 transition-colors duration-300 hover:text-gold-light"
               >
                 {item.label}
               </Link>
